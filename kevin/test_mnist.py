@@ -5,7 +5,7 @@ import numpy as np
 import keras
 from PIL import Image
 
-pre_img = Image.open('image/yoojin.jpg')
+pre_img = Image.open('image/numbers.jpg')
 data = np.array(pre_img)
 
 mnist = tf.keras.datasets.mnist
@@ -26,6 +26,5 @@ model.compile(optimaizer = 'adam',
 
 model.fit(x_train, y_train, epochs = 5)
 model.evaluate(x_test, y_test, verbose = 2)
-result = model.predict(data)
-print(result)
+model.predict()
 
