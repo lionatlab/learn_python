@@ -3,11 +3,31 @@ import numpy as np
 import cv2
 
 
+def pretrained_net():
+    model = tf.keras.models.Sequential([
+        tf.keras.layers.Flatten(input_shape=(28, 28)),
+        tf.keras.layers.Dense(128, activation='relu'),
+        tf.keras.layers.Dropout(0.2),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+
+    model.load_weights('./mnist_net_weights/ckpoint')
+
+    return model
+
+
 def prepare_net():
     mnist = tf.keras.datasets.mnist
 
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
     x_train, x_test = x_train / 255.0, x_test / 255.0
+
+    cv2.imwrite('testset_7.png', x_test[0]*255.0)
+    cv2.imwrite('testset_2.png', x_test[1]*255.0)
+    cv2.imwrite('testset_1.png', x_test[2]*255.0)
+
+    return
+
 
     model = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),
@@ -29,6 +49,7 @@ def prepare_net():
 
 def main():
     mnist_net = prepare_net()
+    mnist_net.save_weights('./mnist_net_weights/ckpoint')
 
     cap = cv2.VideoCapture(0)
 
